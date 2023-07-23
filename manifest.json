@@ -1,0 +1,31 @@
+{
+  "format_version": 2,
+  "header": {
+    "description": "When you break a block, there is a 1% chance to randomly drop an item from the game.",
+    "name": "Serendipity",
+    "uuid": "404c04d4-32f3-47d9-bd04-0172b1dc0301",
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 20, 0]
+  },
+  "modules": [
+    {
+      "description": "JavaScript module code",
+      "language": "javascript",
+      "type": "script",
+      "uuid": "9e376b78-7a64-418a-b2fa-4cee29949758",
+      "version": [1, 0, 0],
+      "entry": "scripts/main.js"
+    }
+  ],
+  "dependencies": [
+    {
+      "module_name": "@minecraft/server",
+      "version": "1.4.0-beta"
+    }
+  ],
+  "metadata": {
+    "authors": ["Lete114"],
+    "license": "GPL-2.0",
+    "url": "https://github.com/mcbe-mods/Serendipity"
+  }
+}
