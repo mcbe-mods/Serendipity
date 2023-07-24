@@ -14,7 +14,7 @@ To download, you need to go to the GitHub repository [releases](https://github.c
 
 > required enable Beta API
 
-Players with OP privileges can modify the probability (50%) using the `/scriptevent serendioity:prob 50` command, which defaults to 1%.
+Players with OP (operator-level permissions) can modify the probability (50%) using the `/scriptevent serendioity:prob 50` command, which defaults to 1%. (If you are a modpack author, you may need this command)
 
 ## Debugger
 
