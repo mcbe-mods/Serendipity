@@ -1,12 +1,15 @@
 import {
   world,
   system,
-  ItemType,
   ItemStack,
   MinecraftItemTypes,
   MinecraftEntityTypes,
   DynamicPropertiesDefinition
 } from '@minecraft/server'
+import { getRandomProbability } from '@mcbe-mods/utils'
+import type { ItemType } from '@minecraft/server'
+
+type MinecraftItemTypesKeys = keyof typeof MinecraftItemTypes
 
 const PROB = 'prob'
 
@@ -18,38 +21,26 @@ world.afterEvents.worldInitialize.subscribe((e) => {
 
 system.afterEvents.scriptEventReceive.subscribe((e) => {
   const { id, message } = e
-  const ids = {
-    'serendipity:prob'() {
-      const prob = +message
-      if (isNaN(prob)) return
-      world.getAllPlayers().forEach((player) => {
-        player.setDynamicProperty(PROB, prob)
-      })
-    }
+  if (id === 'serendipity:prob') {
+    const prob = +message
+    if (isNaN(prob)) return
+    world.getAllPlayers().forEach((player) => {
+      player.setDynamicProperty(PROB, prob)
+    })
   }
-  ids[id] && ids[id]()
 })
 
 world.afterEvents.blockBreak.subscribe(async (e) => {
   const { dimension, block, player } = e
-  const prob = player.getDynamicProperty(PROB) || 1
-  const is = simulateProbability(prob)
+  const prob = +(player.getDynamicProperty(PROB) || 1)
+  if (isNaN(prob)) return
+  const is = getRandomProbability(prob)
   if (!is) return
 
-  const itemTypes = Object.keys(MinecraftItemTypes)
+  const itemTypes = Object.keys(MinecraftItemTypes) as MinecraftItemTypesKeys[]
   const randomIndex = Math.floor(Math.random() * itemTypes.length)
   const randomKey = itemTypes[randomIndex]
 
-  /** @type {ItemType} */
-  const item = MinecraftItemTypes[randomKey]
+  const item = MinecraftItemTypes[randomKey] as ItemType
   dimension.spawnItem(new ItemStack(item), block.location)
 })
-
-/**
- *
- * @param {number} probability
- * @returns
- */
-function simulateProbability(probability) {
-  return Math.random() < probability / 100
-}

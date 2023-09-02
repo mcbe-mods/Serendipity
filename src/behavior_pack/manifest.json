@@ -1,8 +1,8 @@
 {
   "format_version": 2,
   "header": {
-    "description": "When you break a block, there is a 1% chance to randomly drop an item from the game.",
-    "name": "Serendipity",
+    "description": "pack.description",
+    "name": "pack.name",
     "uuid": "404c04d4-32f3-47d9-bd04-0172b1dc0301",
     "version": [1, 0, 0],
     "min_engine_version": [1, 20, 0]

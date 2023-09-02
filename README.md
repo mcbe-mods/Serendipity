@@ -3,7 +3,7 @@
 When you break a block, there is a 1% chance to randomly drop an item from the game.
 
 <p align="center">
-<img src="pack_icon.png" style="width: 40%;">
+<img src="src/behavior_pack/pack_icon.png" style="width: 40%;">
 </p>
 
 ## Download
