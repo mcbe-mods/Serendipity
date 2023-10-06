@@ -37,6 +37,7 @@ world.afterEvents.blockBreak.subscribe(async (e) => {
   const is = getRandomProbability(prob)
   if (!is) return
 
+  player.playSound('random.orb', { pitch: 0.5, volume: 0.5 })
   const itemTypes = Object.keys(MinecraftItemTypes) as MinecraftItemTypesKeys[]
   const randomIndex = Math.floor(Math.random() * itemTypes.length)
   const randomKey = itemTypes[randomIndex]
