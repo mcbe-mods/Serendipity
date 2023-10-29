@@ -1,30 +1,12 @@
-import {
-  world,
-  system,
-  Player,
-  ItemStack,
-  DynamicPropertiesDefinition,
-  PlayerBreakBlockAfterEventSignal
-} from '@minecraft/server'
-import { MinecraftItemTypes } from '@minecraft/vanilla-data'
+import { world, system, Player, ItemStack, ItemTypes } from '@minecraft/server'
 import { getRandomProbability } from '@mcbe-mods/utils'
 
-/* ---------- Versions Adaptation ---------- */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const afterEvents = ((world.afterEvents as any).playerBreakBlock ||
-  (world.afterEvents as any).blockBreak) as PlayerBreakBlockAfterEventSignal
-/* eslint-enable @typescript-eslint/no-explicit-any */
-
-/* ---------- Versions Adaptation ---------- */
-
-const itemTypes = Object.values(MinecraftItemTypes)
+const itemTypes = ItemTypes.getAll().map((item) => item.id)
 const PROB = 'prob'
 
-world.afterEvents.worldInitialize.subscribe((e) => {
-  const def = new DynamicPropertiesDefinition()
-  def.defineNumber(PROB, 1)
-  e.propertyRegistry.registerWorldDynamicProperties(def)
+world.afterEvents.worldInitialize.subscribe(() => {
+  if (world.getDynamicProperty(PROB)) return
+  world.setDynamicProperty(PROB, 1)
 })
 
 system.afterEvents.scriptEventReceive.subscribe((e) => {
@@ -38,7 +20,7 @@ system.afterEvents.scriptEventReceive.subscribe((e) => {
   }
 })
 
-afterEvents.subscribe(async (e) => {
+world.afterEvents.playerBreakBlock.subscribe(async (e) => {
   const { dimension, block, player } = e
   const prob = (world.getDynamicProperty(PROB) as number) || 1
   const is = getRandomProbability(prob)
